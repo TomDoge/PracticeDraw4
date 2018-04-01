@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.CycleInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.hencoder.hencoderpracticedraw4.R;
@@ -73,6 +74,11 @@ public class Practice14FlipboardView extends View {
         int y = centerY - bitmapHeight / 2;
 
         canvas.save();
+        canvas.clipRect(x, y, x + bitmapWidth, centerY);
+        canvas.drawBitmap(bitmap, x, y, paint);
+        canvas.restore();
+
+        canvas.save();
 
         camera.save();
         camera.rotateX(degree);
@@ -81,6 +87,11 @@ public class Practice14FlipboardView extends View {
         canvas.translate(-centerX, -centerY);
         camera.restore();
 
+        // 角度为正，则绘制下半部，否则绘制上半部，因为翻转了
+        if (degree >= 0)
+            canvas.clipRect(x, centerY, x + bitmapWidth, y + bitmapHeight);
+        else
+            canvas.clipRect(x, y, x + bitmapWidth, centerY);
         canvas.drawBitmap(bitmap, x, y, paint);
         canvas.restore();
     }

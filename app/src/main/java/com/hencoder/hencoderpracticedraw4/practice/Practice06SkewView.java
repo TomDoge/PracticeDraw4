@@ -38,7 +38,16 @@ public class Practice06SkewView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.save();
+        // 此处sy含义：沿着正x轴移动，y坐标增加0.5倍
+        canvas.skew(0f, 0.5f);
         canvas.drawBitmap(bitmap, point1.x, point1.y, paint);
+        canvas.restore();
+
+        canvas.save();
+        // 此处sx含义：沿着正y轴移动，x坐标减少0.5倍
+        canvas.skew(-.5f, 0);
         canvas.drawBitmap(bitmap, point2.x, point2.y, paint);
+        canvas.restore();
     }
 }
